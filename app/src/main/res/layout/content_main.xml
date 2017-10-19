@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="otaking.com.statisticscalculator.activities.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <TextView
+        android:id="@+id/textViewAtributos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/label_atributo"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextAtributos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:ems="2"
+        android:inputType="number"
+        android:maxLines="1"
+        android:maxLength="2"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="@string/default_atributo"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewAtributos" />
+
+    <TextView
+        android:id="@+id/textViewIndicesAtributos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/marcasD6"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAtributos" />
+
+    <SeekBar
+        android:id="@+id/seekBarAtributos"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:max="4"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIndicesAtributos" />
+
+    <TextView
+        android:id="@+id/textViewCantDados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/label_dados"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarAtributos" />
+
+    <EditText
+        android:id="@+id/editTextDados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:ems="2"
+        android:inputType="number"
+        android:maxLength="2"
+        android:maxLines="1"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewCantDados"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="@string/default_atributo" />
+
+    <TextView
+        android:id="@+id/textViewIndicesDados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/marcasD20"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCantDados" />
+
+    <SeekBar
+        android:id="@+id/seekBarDados"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:max="19"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIndicesDados" />
+
+    <TextView
+        android:id="@+id/textViewExplosion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/label_explosion"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarDados" />
+
+    <EditText
+        android:id="@+id/editTextExplosion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:ems="2"
+        android:inputType="number"
+        android:maxLength="2"
+        android:maxLines="1"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewExplosion"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="@string/default_atributo" />
+
+    <TextView
+        android:id="@+id/textViewIndicesExplosion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/marcasD6"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewExplosion" />
+
+    <SeekBar
+        android:id="@+id/seekBarExplosion"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:max="4"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIndicesExplosion" />
+
+    <CheckBox
+        android:id="@+id/checkBoxExplosion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_aplica_explosion"
+        android:checked="false"
+        app:layout_constraintLeft_toRightOf="@+id/textViewExplosion"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewExplosion"
+        app:layout_constraintTop_toTopOf="@+id/textViewExplosion" />
+
+    <Button
+        android:id="@+id/buttonD6"
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:onClick="cambiarDado"
+        android:text="@string/boton_d6"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarExplosion" />
+
+    <Button
+        android:id="@+id/buttonD8"
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:onClick="cambiarDado"
+        android:text="@string/boton_d8"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/buttonD6"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarExplosion" />
+
+    <Button
+        android:id="@+id/buttonD10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:onClick="cambiarDado"
+        android:text="@string/boton_d10"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/buttonD8"
+        app:layout_constraintRight_toLeftOf="@+id/buttonD12"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarExplosion"
+        app:layout_constraintHorizontal_bias="0.0" />
+
+    <Button
+        android:id="@+id/buttonD12"
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:onClick="cambiarDado"
+        android:text="@string/boton_d12"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintRight_toLeftOf="@+id/buttonD20"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarExplosion" />
+
+    <Button
+        android:id="@+id/buttonD20"
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:onClick="cambiarDado"
+        android:text="@string/boton_d20"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarExplosion" />
+
+    <Button
+        android:id="@+id/buttonTirar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:onClick="tirar"
+        android:text="@string/boton_tirar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
