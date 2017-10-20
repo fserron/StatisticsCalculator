@@ -27,5 +27,21 @@ public class Utils {
 		
 		return result;
 	}
+
+	/**
+	 * Funcion que agrega ceros adelante de un numero
+	 * @param number el numero origen
+	 * @param digitos el numero de digitos a rellenar con ceros
+	 * @return el numero formateado
+	 */
+	public static String zeroPad(String number, int digitos){
+		String result = number;
+
+		while (result.length() < digitos){
+			result = "0" + result;
+		}
+
+		return result;
+	}
 	
 }

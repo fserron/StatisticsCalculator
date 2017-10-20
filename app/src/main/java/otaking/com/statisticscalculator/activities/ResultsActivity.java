@@ -34,6 +34,7 @@ import java.util.TreeMap;
 import otaking.com.statisticscalculator.R;
 import otaking.com.statisticscalculator.backend.bo.EstadisticaBO;
 import otaking.com.statisticscalculator.backend.bo.impl.EstadisticaBOImpl;
+import otaking.com.statisticscalculator.common.Utils;
 import otaking.com.statisticscalculator.entities.dto.EstadisticaDTO;
 import otaking.com.statisticscalculator.entities.dto.TiradaDTO;
 
@@ -110,7 +111,7 @@ public class ResultsActivity extends AppCompatActivity {
         l.setForm(Legend.LegendForm.LINE);
 
         graficoLineas.setData(this.armarGraficoLineas(mapa));
-        graficoPastel.setData(this.armarGraficoPastel(sortByValue(mapa)));
+        graficoPastel.setData(this.armarGraficoPastel(mapa));
 
         graficoLineas.invalidate(); //refresh
         graficoPastel.invalidate(); //refresh
@@ -187,34 +188,59 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
     private PieData armarGraficoPastel(Map<Integer, Integer> mapa){
-        Iterator it = mapa.keySet().iterator();
-
         Map<String, Integer> mapaNuevo = agruparResultados(mapa);
 
         //Armado de los datos del pastel
         List<PieEntry> pastelEntries = new ArrayList<>();
 
+        Iterator it = mapaNuevo.keySet().iterator();
+
         //Procesamiento de los graficos
         while (it.hasNext() && pastelEntries.size() < CANT_PASTEL) {
-            Integer indice = (Integer) it.next();
+            String indice = (String) it.next();
             String leyenda = indice + " pts.";
-            Float porcentaje = (float) mapa.get(indice) / TAMANO_MUESTRA;
+            Float porcentaje = (float) mapaNuevo.get(indice) / TAMANO_MUESTRA;
             pastelEntries.add(new PieEntry(porcentaje * 100, leyenda));
         }
 
-        PieDataSet pieDataSet = new PieDataSet(pastelEntries, "Top " + CANT_PASTEL + " Resultados.");
+        PieDataSet pieDataSet = new PieDataSet(pastelEntries, "");
         pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 
         return new PieData(pieDataSet);
     }
 
     private static Map<String, Integer> agruparResultados(Map<Integer, Integer> mapa){
-        Map<String, Integer> nuevoMapa = new HashMap<>();
-        double gruposDouble = Math.ceil((double) mapa.keySet().size() / CANT_PASTEL);
+        Map<String, Integer> nuevoMapa = new TreeMap<>();
+
+        //Armamos la separacion en grupos
+        int resultados = mapa.keySet().size();
+        int resto = resultados % CANT_PASTEL;
         int totalGrupo = 0;
+        double cantPorGrupo;
+        int digitos = 1;
+
+        int ultimoIndice = (Integer) mapa.keySet().toArray()[mapa.keySet().size() - 1];
+        if (ultimoIndice >= 100) digitos = 3;
+        else if (ultimoIndice >= 10) digitos = 2;
+
+        //Si la cantidad de resultados...
+        if (resto == 0) {//Es un multiplo exacto de la cantidad de grupos
+            cantPorGrupo = mapa.keySet().size() / CANT_PASTEL;
+        } else if (resultados <= CANT_PASTEL) { //Es menor a la cantidad de grupos
+            //Transformamos el mapa
+            for (Integer indice : mapa.keySet()) {
+                nuevoMapa.put(String.valueOf(indice), mapa.get(indice));
+            }
+
+            return nuevoMapa;
+        } else {
+            //Si son mas de la cantidad de grupos, redondeamos hacia abajo
+            cantPorGrupo = Math.floor((double) mapa.keySet().size() / CANT_PASTEL);
+        }
 
         Iterator it = mapa.keySet().iterator();
-        int index = 0;
+
+        int index = 1;
         String clave = null;
 
         while (it.hasNext()){
@@ -223,13 +249,37 @@ public class ResultsActivity extends AppCompatActivity {
             //Voy sumando los valores
             totalGrupo += mapa.get(key);
 
+            int var = 0;
+            switch (resto){
+                case 1: //Si solo sobra uno, lo agregamos al principio
+                    if (nuevoMapa.size() == 0) var = 1;
+                    else var = 0;
+                    break;
+                case 2: //Si sobran dos, agregamos uno al principio y otro al final
+                    if (nuevoMapa.size() == 0) var = 1;
+                    else if (nuevoMapa.size() == (CANT_PASTEL - 1)) var = 1;
+                    else var = 0;
+                    break;
+                case 3: //Si sobran tres, agregamos dos al principio y uno al final
+                    if (nuevoMapa.size() == 0) var = 2;
+                    else if (nuevoMapa.size() == (CANT_PASTEL - 1)) var = 1;
+                    else var = 0;
+                    break;
+                case 4: //Si sobran cuatro, agregamos dos al principio y dos al final
+                    if (nuevoMapa.size() == 0) var = 2;
+                    else if (nuevoMapa.size() == (CANT_PASTEL - 1)) var = 2;
+                    else var = 0;
+                    break;
+            }
+
             //Registro el primer elemento
-            if (index == 0) clave = key.toString();
+            if (index == 1) clave = Utils.zeroPad(key.toString(), digitos);
             //Registro el ultimo elemento
-            if ((index % gruposDouble) == 0) {
-                clave += " a " + key.toString();
+            if (index % (cantPorGrupo + var) == 0) {
+                clave += " a " + Utils.zeroPad(key.toString(), digitos);
                 nuevoMapa.put(clave, totalGrupo);
-                index = 0;
+                totalGrupo = 0;
+                index = 1;
             } else {
                 index++;
             }
