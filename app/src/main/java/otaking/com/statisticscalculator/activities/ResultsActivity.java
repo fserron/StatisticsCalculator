@@ -44,7 +44,8 @@ public class ResultsActivity extends AppCompatActivity {
     private List<Entry> valoresEjeY;
     private List<String> valoresEjeX;
 
-    private static final int TAMANO_MUESTRA = 100000;
+    private static final int TAMANO_MUESTRA = 1000000;
+    private static final int TAMANO_MUESTRA_EXPLOSION = 100000;
     private static final int CANT_PASTEL = 5;
 
 
@@ -86,12 +87,16 @@ public class ResultsActivity extends AppCompatActivity {
         dto.setExplosiva(aplica);
         dto.setCaras(caras);
 
-        //Atributos que se rellenan porque son necesarios
+        //Atributos que se rellenan porque son necesarios, aunque no entran en juego todavia
         dto.setBono(0);
         dto.setFatidica(false);
 
+        //Definimos el tamaño de la muestra
+        int muestra = TAMANO_MUESTRA;
+        if (aplica) muestra = TAMANO_MUESTRA_EXPLOSION; //Si aplica explosion, reducimos la muestra
+
         //Se hace la tirada
-        EstadisticaDTO estadisticaDTO = estadisticaBO.estadisticaTirada(dto, TAMANO_MUESTRA);
+        EstadisticaDTO estadisticaDTO = estadisticaBO.estadisticaTirada(dto, muestra);
 
         TextView maximoText = (TextView) findViewById(idTextoMaximo);
         TextView minimoText = (TextView) findViewById(idTextoMinimo);
@@ -204,7 +209,7 @@ public class ResultsActivity extends AppCompatActivity {
         }
 
         PieDataSet pieDataSet = new PieDataSet(pastelEntries, "");
-        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         return new PieData(pieDataSet);
     }

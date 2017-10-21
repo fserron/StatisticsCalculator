@@ -21,12 +21,12 @@ import otaking.com.statisticscalculator.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Integer MAX_D6 = 4;
-    private static final Integer MAX_D8 = 6;
-    private static final Integer MAX_D10 = 8;
-    private static final Integer MAX_D12 = 10;
-    private static final Integer MAX_D20 = 19;
-    private Integer caras = MAX_D6;
+    private static final int MAX_D6 = 4;
+    private static final int MAX_D8 = 6;
+    private static final int MAX_D10 = 8;
+    private static final int MAX_D12 = 10;
+    private static final int MAX_D20 = 19;
+    private int caras = MAX_D6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,20 +263,33 @@ public class MainActivity extends AppCompatActivity {
         int explosion = 0;
         if (aplica) explosion = Integer.parseInt(explosionText.getText().toString());
 
-        int caras = 6; //Por defecto se tira D6
+        int carasDado = 6; //Por defecto se tira D6
 
         //Calculo de la cantidad de caras:
-        if (atributo > 5 && atributo <= 7) caras = 8;
-        else if (atributo > 7 && atributo <= 9) caras = 10;
-        else if (atributo > 9 && atributo <= 11) caras = 12;
-        else if (atributo > 11 && atributo <= 20) caras = 20;
+        switch (caras){
+            case MAX_D6:
+                carasDado = 6;
+                break;
+            case MAX_D8:
+                carasDado = 8;
+                break;
+            case MAX_D10:
+                carasDado = 10;
+                break;
+            case MAX_D12:
+                carasDado = 12;
+                break;
+            case MAX_D20:
+                carasDado = 20;
+                break;
+        }
 
         Intent resultsActivity = new Intent(this, ResultsActivity.class);
         resultsActivity.putExtra("atributo", atributo);
         resultsActivity.putExtra("dados", dados);
         resultsActivity.putExtra("explosion", explosion);
         resultsActivity.putExtra("aplica", aplica);
-        resultsActivity.putExtra("caras", caras);
+        resultsActivity.putExtra("caras", carasDado);
         startActivity(resultsActivity);
     }
 }

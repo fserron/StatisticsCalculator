@@ -2,10 +2,12 @@ package otaking.com.statisticscalculator.backend.dao;
 
 import java.util.List;
 
+import otaking.com.statisticscalculator.entities.dto.DadoDTO;
+
 public interface DadoDAO {
 
-	List<Integer> hacerTiradaSimple(Integer cantidad);
+	List<Integer> hacerTirada(DadoDTO dto);
 	
-	List<Integer> hacerTiradaVariable(Integer caras, Integer cantidad);
+	Integer tirarDado(Integer caras);
 	
 }

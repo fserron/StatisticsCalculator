@@ -4,34 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import otaking.com.statisticscalculator.backend.dao.DadoDAO;
+import otaking.com.statisticscalculator.entities.dto.DadoDTO;
 
 public class DadoDAOImpl implements DadoDAO {
 
-	public List<Integer> hacerTiradaSimple(Integer cantidad){
+	public List<Integer> hacerTirada(DadoDTO dto){
 		List<Integer> resultados = new ArrayList<>();
 		
-		for (int i = 0; i < cantidad; i++){
-			resultados.add(tirarDadoSimple());
-		}
-		
-		return resultados;
-	}
-	
-	public List<Integer> hacerTiradaVariable(Integer caras, Integer cantidad){
-		List<Integer> resultados = new ArrayList<>();
-		
-		for (int i = 0; i < cantidad; i++){
-			resultados.add(tirarDadoVariable(caras));
+		for (int i = 0; i < dto.getCantidad(); i++){
+			resultados.add(tirarDado(dto.getCaras()));
 		}
 		
 		return resultados;
 	}
 
-	private Integer tirarDadoSimple(){
-		return (int) Math.ceil(6 * Math.random());
-	}
-
-	private Integer tirarDadoVariable(Integer caras){
+	public Integer tirarDado(Integer caras){
 		return (int) Math.ceil(caras * Math.random());
 	}
 	

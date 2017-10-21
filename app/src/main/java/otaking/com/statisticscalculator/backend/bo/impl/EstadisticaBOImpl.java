@@ -7,20 +7,15 @@ import java.util.TreeMap;
 
 import otaking.com.statisticscalculator.backend.bo.EstadisticaBO;
 import otaking.com.statisticscalculator.backend.bo.TiradaBO;
-import otaking.com.statisticscalculator.backend.dao.DadoDAO;
-import otaking.com.statisticscalculator.backend.dao.impl.DadoDAOImpl;
 import otaking.com.statisticscalculator.entities.dto.EstadisticaDTO;
 import otaking.com.statisticscalculator.entities.dto.TiradaDTO;
 import otaking.com.statisticscalculator.entities.entities.Tirada;
 
 public class EstadisticaBOImpl implements EstadisticaBO {
-	
-	private DadoDAO dadoDAO;
 
 	private TiradaBO tiradaBO;
 
 	public EstadisticaBOImpl(){
-		this.dadoDAO = new DadoDAOImpl();
 		this.tiradaBO = new TiradaBOImpl();
 	}
 
