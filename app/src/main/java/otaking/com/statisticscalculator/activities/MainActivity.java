@@ -1,6 +1,7 @@
 package otaking.com.statisticscalculator.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,10 +15,12 @@ import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import otaking.com.statisticscalculator.R;
+import otaking.com.statisticscalculator.common.components.CustomSeekBar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,15 +37,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         this.init();
         this.bindearListeners();
@@ -73,34 +67,51 @@ public class MainActivity extends AppCompatActivity {
 
     //Metodo que inicializa valores
     private void init(){
-        final int idBarraAtributo = R.id.seekBarAtributos;
         final int idTextoAtributo = R.id.editTextAtributos;
-        final int idBarraDados = R.id.seekBarDados;
+        final int idLayoutAtributo = R.id.linearLineoutAtributo;
         final int idTextoDados = R.id.editTextDados;
-        final int idBarraExp = R.id.seekBarExplosion;
+        final int idLayoutDados = R.id.linearLineoutDados;
         final int idTextoExp = R.id.editTextExplosion;
+        final int idLayoutExplosion = R.id.linearLineoutExplosion;
         final int idCheckExp = R.id.checkBoxExplosion;
+
+        //Barra de Atributos
+        LinearLayout layoutAtributo = (LinearLayout) findViewById(idLayoutAtributo);
+        CustomSeekBar customSeekBarAtributo = new CustomSeekBar(this, 5, Color.DKGRAY);
+        customSeekBarAtributo.addSeekBar(layoutAtributo);
+
+        //Barra de Dados
+        LinearLayout layoutDados = (LinearLayout) findViewById(idLayoutDados);
+        CustomSeekBar customSeekBarDados = new CustomSeekBar(this, 5, Color.DKGRAY);
+        customSeekBarDados.addSeekBar(layoutDados);
+
+        //Barra de Explosion
+        LinearLayout layoutExplosion = (LinearLayout) findViewById(idLayoutExplosion);
+        CustomSeekBar customSeekBarExplosion = new CustomSeekBar(this, 5, Color.DKGRAY);
+        customSeekBarExplosion.addSeekBar(layoutExplosion);
 
         //Desactivamos las opciones de explosion.
         EditText editText = (EditText) findViewById(idTextoExp);
-        SeekBar seeekBar = (SeekBar) findViewById(idBarraExp);
 
-        seeekBar.setEnabled(false);
-        //editText.setInputType(InputType.TYPE_NULL);
-        //editText.setFocusable(false);
+        layoutExplosion.setEnabled(false);
         editText.setEnabled(false);
+        EditText editTextAtributo = (EditText) findViewById(idTextoAtributo);
+        EditText editTextDados = (EditText) findViewById(idTextoDados);
+        editTextAtributo.setText("1");
+        editTextDados.setText("1");
     }
 
     private void bindearListeners() {
         //Constantes con ids
-        final int idBarraAtributo = R.id.seekBarAtributos;
         final int idTextoAtributo = R.id.editTextAtributos;
-        final int idBarraDados = R.id.seekBarDados;
         final int idTextoDados = R.id.editTextDados;
-        final int idBarraExp = R.id.seekBarExplosion;
         final int idTextoExp = R.id.editTextExplosion;
         final int idCheckExp = R.id.checkBoxExplosion;
+        final int idLayoutAtributo = R.id.linearLineoutAtributo;
+        final int idLayoutDados = R.id.linearLineoutDados;
+        final int idLayoutExplosion = R.id.linearLineoutExplosion;
 
+/*
         //Listener del seekbar de atributos
         SeekBar sbAtrib = (SeekBar) findViewById(idBarraAtributo);
         sbAtrib.setOnSeekBarChangeListener(seekBarListener(idBarraAtributo, idTextoAtributo));
@@ -127,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         CheckBox chkExp = (CheckBox) findViewById(idCheckExp);
         chkExp.setOnCheckedChangeListener(checkBoxListener(idBarraExp, idTextoExp));
-
+*/
     }
 
     private SeekBar.OnSeekBarChangeListener seekBarListener(final int source, final int target){
@@ -179,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 SeekBar seeekBar = (SeekBar) findViewById(seekbar);
 
                 seeekBar.setProgress(0);
-                editText.setText("");
+                editText.setText("1");
 
                 if (isChecked){
                     seeekBar.setEnabled(true);
@@ -202,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
         final int idBotonD10 = R.id.buttonD10;
         final int idBotonD12 = R.id.buttonD12;
         final int idBotonD20 = R.id.buttonD20;
+        /*
         final int idBarraAtributo = R.id.seekBarAtributos;
         final int idBarraExp = R.id.seekBarExplosion;
         final int idIndicesAtrib = R.id.textViewIndicesAtributos;
@@ -243,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
             textIndiceE.setText(R.string.marcasD20);
             caras = MAX_D20;
         }
-
+*/
     }
 
     public void tirar(View view){
