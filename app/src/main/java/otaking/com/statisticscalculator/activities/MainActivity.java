@@ -108,15 +108,15 @@ public class MainActivity extends AppCompatActivity {
 
         //Listener del editText de atributos
         EditText etAtrib = (EditText) findViewById(idTextoAtributo);
-        etAtrib.setOnEditorActionListener(editTextListener(idSBLayoutAtributo, caras));
+        etAtrib.setOnEditorActionListener(editTextListener(idSBLayoutAtributo));
 
         //Listener del editText de dados
         EditText etDados = (EditText) findViewById(idTextoDados);
-        etDados.setOnEditorActionListener(editTextListener(idSBLayoutDados, MAX_DADOS));
+        etDados.setOnEditorActionListener(editTextListener(idSBLayoutDados));
 
         //Listener del editText de explosion
         EditText etExp = (EditText) findViewById(idTextoExp);
-        etExp.setOnEditorActionListener(editTextListener(idSBLayoutExplosion, caras));
+        etExp.setOnEditorActionListener(editTextListener(idSBLayoutExplosion));
 
         CheckBox chkExp = (CheckBox) findViewById(idCheckExp);
         chkExp.setOnCheckedChangeListener(checkBoxListener(idSBLayoutExplosion, idTextoExp));
@@ -138,19 +138,23 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-    private TextView.OnEditorActionListener editTextListener(final int target, final int max){
+    private TextView.OnEditorActionListener editTextListener(final int target){
         return new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 String valor = String.valueOf(v.getText());
+                final int idTextoDados = R.id.editTextDados;
                 Integer valorInt;
                 try {
                     valorInt = Integer.valueOf(valor);
                     if (valorInt < 1){
                         v.setText("1");
-                    } else if (valorInt > (max)){
-                        v.setText(String.valueOf(max));
+                    } else if (v.getId() == idTextoDados && valorInt > (MAX_DADOS)){
+                        //Si es el text de dados, el maximo es 20
+                        v.setText(String.valueOf(MAX_DADOS));
+                    } else if (v.getId() != idTextoDados && valorInt > (caras)) {
+                        v.setText(String.valueOf(caras));
                     } else {
                         SeekBarLayout seekBarLayout = (SeekBarLayout) findViewById(target);
                         SeekBar seeekBar = seekBarLayout.getSeekBar();
@@ -158,7 +162,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 } catch (NumberFormatException nfe){
-                    //Loguear?
+                    //Si ocurre cualquier error, vuelve a 1.
+                    v.setText("1");
+                    SeekBarLayout seekBarLayout = (SeekBarLayout) findViewById(target);
+                    SeekBar seeekBar = seekBarLayout.getSeekBar();
+                    seeekBar.setProgress(0);
                 }
 
                 return true;
