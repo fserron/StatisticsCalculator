@@ -1,13 +1,9 @@
 package otaking.com.statisticscalculator.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
@@ -15,20 +11,20 @@ import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import otaking.com.statisticscalculator.R;
-import otaking.com.statisticscalculator.common.components.CustomSeekBar;
+import otaking.com.statisticscalculator.common.components.SeekBarLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int MAX_D6 = 4;
-    private static final int MAX_D8 = 6;
-    private static final int MAX_D10 = 8;
-    private static final int MAX_D12 = 10;
-    private static final int MAX_D20 = 19;
+    private static final int MAX_D6 = 5;
+    private static final int MAX_D8 = 7;
+    private static final int MAX_D10 = 9;
+    private static final int MAX_D12 = 11;
+    private static final int MAX_D20 = 20;
+    private static final int MAX_DADOS = 20;
     private int caras = MAX_D6;
 
     @Override
@@ -68,32 +64,16 @@ public class MainActivity extends AppCompatActivity {
     //Metodo que inicializa valores
     private void init(){
         final int idTextoAtributo = R.id.editTextAtributos;
-        final int idLayoutAtributo = R.id.linearLineoutAtributo;
         final int idTextoDados = R.id.editTextDados;
-        final int idLayoutDados = R.id.linearLineoutDados;
         final int idTextoExp = R.id.editTextExplosion;
-        final int idLayoutExplosion = R.id.linearLineoutExplosion;
-        final int idCheckExp = R.id.checkBoxExplosion;
-
-        //Barra de Atributos
-        LinearLayout layoutAtributo = (LinearLayout) findViewById(idLayoutAtributo);
-        CustomSeekBar customSeekBarAtributo = new CustomSeekBar(this, 5, Color.DKGRAY);
-        customSeekBarAtributo.addSeekBar(layoutAtributo);
-
-        //Barra de Dados
-        LinearLayout layoutDados = (LinearLayout) findViewById(idLayoutDados);
-        CustomSeekBar customSeekBarDados = new CustomSeekBar(this, 5, Color.DKGRAY);
-        customSeekBarDados.addSeekBar(layoutDados);
-
-        //Barra de Explosion
-        LinearLayout layoutExplosion = (LinearLayout) findViewById(idLayoutExplosion);
-        CustomSeekBar customSeekBarExplosion = new CustomSeekBar(this, 5, Color.DKGRAY);
-        customSeekBarExplosion.addSeekBar(layoutExplosion);
+        final int idSBLayoutExplosion = R.id.seekBarLayoutExplosion;
 
         //Desactivamos las opciones de explosion.
         EditText editText = (EditText) findViewById(idTextoExp);
+        SeekBarLayout sblExplosion = (SeekBarLayout) findViewById(idSBLayoutExplosion);
+        SeekBar sbExplosion = sblExplosion.getSeekBar();
 
-        layoutExplosion.setEnabled(false);
+        sbExplosion.setEnabled(false);
         editText.setEnabled(false);
         EditText editTextAtributo = (EditText) findViewById(idTextoAtributo);
         EditText editTextDados = (EditText) findViewById(idTextoDados);
@@ -107,38 +87,40 @@ public class MainActivity extends AppCompatActivity {
         final int idTextoDados = R.id.editTextDados;
         final int idTextoExp = R.id.editTextExplosion;
         final int idCheckExp = R.id.checkBoxExplosion;
-        final int idLayoutAtributo = R.id.linearLineoutAtributo;
-        final int idLayoutDados = R.id.linearLineoutDados;
-        final int idLayoutExplosion = R.id.linearLineoutExplosion;
+        final int idSBLayoutAtributo = R.id.seekBarLayoutAtributos;
+        final int idSBLayoutDados = R.id.seekBarLayoutDados;
+        final int idSBLayoutExplosion = R.id.seekBarLayoutExplosion;
 
-/*
         //Listener del seekbar de atributos
-        SeekBar sbAtrib = (SeekBar) findViewById(idBarraAtributo);
-        sbAtrib.setOnSeekBarChangeListener(seekBarListener(idBarraAtributo, idTextoAtributo));
+        SeekBarLayout sblAtributo = (SeekBarLayout) findViewById(idSBLayoutAtributo);
+        SeekBar sbAtrib = sblAtributo.getSeekBar();
+        sbAtrib.setOnSeekBarChangeListener(seekBarListener(sbAtrib.getId(), idTextoAtributo));
 
         //Listener del seekbar de dados
-        SeekBar sbDados = (SeekBar) findViewById(idBarraDados);
-        sbDados.setOnSeekBarChangeListener(seekBarListener(idBarraDados, idTextoDados));
+        SeekBarLayout sblDados = (SeekBarLayout) findViewById(idSBLayoutDados);
+        SeekBar sbDados = sblDados.getSeekBar();
+        sbDados.setOnSeekBarChangeListener(seekBarListener(sbDados.getId(), idTextoDados));
 
-        //Listener del seekbar de dados
-        SeekBar sbExp = (SeekBar) findViewById(idBarraExp);
-        sbExp.setOnSeekBarChangeListener(seekBarListener(idBarraExp, idTextoExp));
+        //Listener del seekbar de explosiones
+        SeekBarLayout sblExplosion = (SeekBarLayout) findViewById(idSBLayoutExplosion);
+        SeekBar sbExplosion = sblExplosion.getSeekBar();
+        sbExplosion.setOnSeekBarChangeListener(seekBarListener(sbExplosion.getId(), idTextoExp));
 
         //Listener del editText de atributos
         EditText etAtrib = (EditText) findViewById(idTextoAtributo);
-        etAtrib.setOnEditorActionListener(editTextListener(idBarraAtributo));
+        etAtrib.setOnEditorActionListener(editTextListener(idSBLayoutAtributo, caras));
 
         //Listener del editText de dados
         EditText etDados = (EditText) findViewById(idTextoDados);
-        etDados.setOnEditorActionListener(editTextListener(idBarraDados));
+        etDados.setOnEditorActionListener(editTextListener(idSBLayoutDados, MAX_DADOS));
 
-        //Listener del editText de dados
+        //Listener del editText de explosion
         EditText etExp = (EditText) findViewById(idTextoExp);
-        etExp.setOnEditorActionListener(editTextListener(idBarraExp));
+        etExp.setOnEditorActionListener(editTextListener(idSBLayoutExplosion, caras));
 
         CheckBox chkExp = (CheckBox) findViewById(idCheckExp);
-        chkExp.setOnCheckedChangeListener(checkBoxListener(idBarraExp, idTextoExp));
-*/
+        chkExp.setOnCheckedChangeListener(checkBoxListener(idSBLayoutExplosion, idTextoExp));
+
     }
 
     private SeekBar.OnSeekBarChangeListener seekBarListener(final int source, final int target){
@@ -156,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-    private TextView.OnEditorActionListener editTextListener(final int target){
+    private TextView.OnEditorActionListener editTextListener(final int target, final int max){
         return new TextView.OnEditorActionListener() {
 
             @Override
@@ -165,10 +147,13 @@ public class MainActivity extends AppCompatActivity {
                 Integer valorInt;
                 try {
                     valorInt = Integer.valueOf(valor);
-                    if (valorInt < 1 || valorInt > (caras + 1)) //TODO: Obtener cant caras
-                        v.setText("");
-                    else {
-                        SeekBar seeekBar = (SeekBar) findViewById(target);
+                    if (valorInt < 1){
+                        v.setText("1");
+                    } else if (valorInt > (max)){
+                        v.setText(String.valueOf(max));
+                    } else {
+                        SeekBarLayout seekBarLayout = (SeekBarLayout) findViewById(target);
+                        SeekBar seeekBar = seekBarLayout.getSeekBar();
                         seeekBar.setProgress(valorInt - 1);
                     }
 
@@ -187,20 +172,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
                 EditText editText = (EditText) findViewById(text);
-                SeekBar seeekBar = (SeekBar) findViewById(seekbar);
+                SeekBarLayout seekBarLayout = (SeekBarLayout) findViewById(seekbar);
+                SeekBar seeekBar = seekBarLayout.getSeekBar();
 
                 seeekBar.setProgress(0);
                 editText.setText("1");
 
                 if (isChecked){
                     seeekBar.setEnabled(true);
-                    //editText.setFocusable(true);
-                    //editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                     editText.setEnabled(true);
                 } else {
                     seeekBar.setEnabled(false);
-                    //editText.setInputType(InputType.TYPE_NULL);
-                    //editText.setFocusable(false);
                     editText.setEnabled(false);
                 }
             }
@@ -213,49 +195,42 @@ public class MainActivity extends AppCompatActivity {
         final int idBotonD10 = R.id.buttonD10;
         final int idBotonD12 = R.id.buttonD12;
         final int idBotonD20 = R.id.buttonD20;
-        /*
-        final int idBarraAtributo = R.id.seekBarAtributos;
-        final int idBarraExp = R.id.seekBarExplosion;
-        final int idIndicesAtrib = R.id.textViewIndicesAtributos;
-        final int idIndicesExp = R.id.textViewIndicesAtributos;
+        final int idSBLayoutAtributo = R.id.seekBarLayoutAtributos;
+        final int idSBLayoutExplosion = R.id.seekBarLayoutExplosion;
 
-        SeekBar sbAtrib = (SeekBar) findViewById(idBarraAtributo);
-        SeekBar sbExp = (SeekBar) findViewById(idBarraExp);
-        TextView textIndiceA = (TextView) findViewById(idIndicesAtrib);
-        TextView textIndiceE = (TextView) findViewById(idIndicesExp);
+        //Listener del seekbar de atributos
+        SeekBarLayout sblAtributo = (SeekBarLayout) findViewById(idSBLayoutAtributo);
+        SeekBarLayout sblExplosion = (SeekBarLayout) findViewById(idSBLayoutExplosion);
 
-        if (view.getId() == idBotonD6){
-            sbAtrib.setMax(MAX_D6);
-            sbExp.setMax(MAX_D6);
-            textIndiceA.setText(R.string.marcasD6);
-            textIndiceE.setText(R.string.marcasD6);
-            caras = MAX_D6;
-        } else if (view.getId() == idBotonD8){
-            sbAtrib.setMax(MAX_D8);
-            sbExp.setMax(MAX_D8);
-            textIndiceA.setText(R.string.marcasD8);
-            textIndiceE.setText(R.string.marcasD8);
-            caras = MAX_D8;
-        } else if (view.getId() == idBotonD10){
-            sbAtrib.setMax(MAX_D10);
-            sbExp.setMax(MAX_D10);
-            textIndiceA.setText(R.string.marcasD10);
-            textIndiceE.setText(R.string.marcasD10);
-            caras = MAX_D10;
-        } else if (view.getId() == idBotonD12){
-            sbAtrib.setMax(MAX_D12);
-            sbExp.setMax(MAX_D12);
-            textIndiceA.setText(R.string.marcasD12);
-            textIndiceE.setText(R.string.marcasD12);
-            caras = MAX_D12;
-        } else if (view.getId() == idBotonD20){
-            sbAtrib.setMax(MAX_D20);
-            sbExp.setMax(MAX_D20);
-            textIndiceA.setText(R.string.marcasD20);
-            textIndiceE.setText(R.string.marcasD20);
-            caras = MAX_D20;
+        switch (view.getId()){
+            case idBotonD6:
+                sblAtributo.resizeSeekBar(MAX_D6);
+                sblExplosion.resizeSeekBar(MAX_D6);
+                caras = MAX_D6;
+                break;
+            case idBotonD8:
+                sblAtributo.resizeSeekBar(MAX_D8);
+                sblExplosion.resizeSeekBar(MAX_D8);
+                caras = MAX_D8;
+                break;
+            case idBotonD10:
+                sblAtributo.resizeSeekBar(MAX_D10);
+                sblExplosion.resizeSeekBar(MAX_D10);
+                caras = MAX_D10;
+                break;
+            case idBotonD12:
+                sblAtributo.resizeSeekBar(MAX_D12);
+                sblExplosion.resizeSeekBar(MAX_D12);
+                caras = MAX_D12;
+                break;
+            case idBotonD20:
+                sblAtributo.resizeSeekBar(MAX_D20);
+                sblExplosion.resizeSeekBar(MAX_D20);
+                caras = MAX_D20;
+                break;
+            default:
+                break;
         }
-*/
     }
 
     public void tirar(View view){
